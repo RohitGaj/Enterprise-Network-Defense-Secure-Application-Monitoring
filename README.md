@@ -72,5 +72,5 @@ Only restricted and firewall-approved communication is allowed between zones.
 
 
 ## Full Project Report
-A detailed academic report describing design, implementation, and results is available:
-- **Group08_REPORT_Kunjan_18_Rohit_29.pdf**
+A detailed academic report describing design, implementation, and results is available in docs
+
