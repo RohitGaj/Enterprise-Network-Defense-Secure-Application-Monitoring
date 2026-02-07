@@ -1,5 +1,3 @@
-# Enterprise-Network-Defense-Secure-Application-Monitoring
-
 # Enterprise Network Defense using NDC, IDS & SIEM
 
 This project demonstrates an enterprise-style network defense architecture using
