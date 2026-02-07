@@ -48,12 +48,19 @@ Only restricted and firewall-approved communication is allowed between zones.
 - Encryption at rest and in transit
 
 ## Screenshots & Evidence
-See the `evidence/` directory for:
-- Nmap scan detection
-- Brute-force alerts
 - Wazuh dashboard screenshots
 
 - <img width="1911" height="911" alt="Screenshot 2026-02-04 141654" src="https://github.com/user-attachments/assets/2f0d677f-7edb-422f-90b2-01c2aa78bb7a" />
+
+- Brute-force alerts
+- Nmap scan detection
+
+- <img width="1894" height="102" alt="Screenshot 2026-02-04 142815" src="https://github.com/user-attachments/assets/855e2293-3b43-4d91-bab3-cb1935da2c33" />
+
+- <img width="930" height="840" alt="Screenshot 2026-02-02 193837" src="https://github.com/user-attachments/assets/8fbcef8f-30b8-4af0-b84c-351bbbdeaaf1" />
+
+- <img width="928" height="855" alt="Screenshot 2026-02-04 143729" src="https://github.com/user-attachments/assets/866bee06-5252-4796-a8de-b46b54a12146" />
+
 
 
 ## Full Project Report
