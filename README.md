@@ -56,14 +56,19 @@ Only restricted and firewall-approved communication is allowed between zones.
 
 <img width="919" height="103" alt="Screenshot 2026-02-04 143631" src="https://github.com/user-attachments/assets/ea950bab-56b3-4a57-8f03-1c0cdd6b1656" />
 
-- Brute-force alerts
 - Nmap scan detection
 
+<img width="552" height="232" alt="Screenshot 2026-02-04 142227" src="https://github.com/user-attachments/assets/9957b698-4dfc-4e5f-ae5f-f3273331e470" />
 
 <img width="930" height="840" alt="Screenshot 2026-02-02 193837" src="https://github.com/user-attachments/assets/8fbcef8f-30b8-4af0-b84c-351bbbdeaaf1" />
 
+- Brute-force alerts
+
+<img width="1266" height="214" alt="Screenshot 2026-02-04 142202" src="https://github.com/user-attachments/assets/04e77636-6988-4d2a-94ba-2109e16c3ed0" />
+
 <img width="928" height="855" alt="Screenshot 2026-02-04 143729" src="https://github.com/user-attachments/assets/866bee06-5252-4796-a8de-b46b54a12146" />
 
+<img width="779" height="218" alt="Screenshot 2026-02-04 142635" src="https://github.com/user-attachments/assets/ded4e1c6-5c45-4132-87d2-d41da195b7dd" />
 
 
 ## Full Project Report
