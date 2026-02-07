@@ -13,6 +13,9 @@ protecting sensitive internal data.
 The environment is divided into multiple security zones:
 - **External Network** – attacker simulation (Kali Linux)
 - **DMZ Network** – public-facing web application
+
+<img width="883" height="550" alt="Screenshot 2026-02-04 142859" src="https://github.com/user-attachments/assets/39d25ec6-59fc-47e0-883b-347ba2ce5988" />
+
 - **Internal Network** – secure database and sensitive data
 - **Security Zone** – Suricata IDS and Wazuh SIEM
 
@@ -73,4 +76,5 @@ Only restricted and firewall-approved communication is allowed between zones.
 
 ## Full Project Report
 A detailed academic report describing design, implementation, and results is available in docs
+
 
