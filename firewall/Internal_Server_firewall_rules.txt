@@ -1,0 +1,52 @@
+# ================================
+# Flush existing rules
+# ================================
+iptables -F
+iptables -X
+
+# ================================
+# Default policies (Zero Trust)
+# ================================
+iptables -P INPUT DROP
+iptables -P FORWARD DROP
+iptables -P OUTPUT ACCEPT
+
+# ================================
+# Allow loopback traffic
+# ================================
+iptables -A INPUT -i lo -j ACCEPT
+
+# ================================
+# Allow established connections
+# ================================
+iptables -A INPUT -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT
+
+# ================================
+# Allow SSH (ONLY from internal admin network)
+# ================================
+iptables -A INPUT -p tcp -s 192.168.20.0/24 --dport 22 -j ACCEPT
+
+# ================================
+# Allow MySQL ONLY from DMZ network
+# ================================
+iptables -A INPUT -p tcp -s 192.168.10.0/24 --dport 3306 -j ACCEPT
+
+# ================================
+# Allow Wazuh agent communication (to manager)
+# ================================
+iptables -A INPUT -p udp -s 192.168.20.0/24 --dport 1514 -j ACCEPT
+iptables -A INPUT -p tcp -s 192.168.20.0/24 --dport 1515 -j ACCEPT
+
+# ================================
+# Allow ICMP (ping) from internal network only
+# ================================
+iptables -A INPUT -p icmp --icmp-type echo-request -s 192.168.20.0/24 -j ACCEPT
+
+# ================================
+# Log and drop everything else
+# ================================
+iptables -A INPUT -m limit --limit 5/min -j LOG --log-prefix "INTERNAL_DROP: "
+iptables -A INPUT -j DROP
+
+apt install iptables-persistent -y
+netfilter-persistent save

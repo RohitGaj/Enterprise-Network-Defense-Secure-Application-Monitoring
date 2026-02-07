@@ -1,0 +1,134 @@
+🔒 DMZ SERVER – Hardened iptables Configuration
+🎯 Objective
+
+Expose only required public services (HTTP/HTTPS)
+
+Protect against lateral movement to Internal network
+
+Allow SIEM (Wazuh) communication
+
+Maintain a default-deny security posture
+
+✅ Assumptions
+
+DMZ Network: 192.168.10.0/24
+
+Internal Network: 192.168.20.0/24
+
+Services on DMZ:
+
+Web application (HTTP/HTTPS)
+
+SSH (administration)
+
+Wazuh agent
+
+✅ DMZ Firewall Rules (COPY & PASTE)
+# ================================
+# Flush existing rules
+# ================================
+iptables -F
+iptables -X
+iptables -t nat -F
+
+# ================================
+# Default policies (Hardened)
+# ================================
+iptables -P INPUT DROP
+iptables -P FORWARD DROP
+iptables -P OUTPUT ACCEPT
+
+# ================================
+# Allow loopback traffic
+# ================================
+iptables -A INPUT -i lo -j ACCEPT
+
+# ================================
+# Allow established connections
+# ================================
+iptables -A INPUT -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT
+
+# ================================
+# Allow SSH (Admin access)
+# ================================
+iptables -A INPUT -p tcp --dport 22 -j ACCEPT
+
+# ================================
+# Allow Web Application Traffic
+# ================================
+iptables -A INPUT -p tcp --dport 80 -j ACCEPT
+iptables -A INPUT -p tcp --dport 443 -j ACCEPT
+
+# ================================
+# Allow ICMP (Ping – Optional)
+# ================================
+iptables -A INPUT -p icmp --icmp-type echo-request -j ACCEPT
+
+# ================================
+# Allow Wazuh Agent Communication
+# ================================
+iptables -A INPUT -p udp -s 192.168.20.0/24 --dport 1514 -j ACCEPT
+iptables -A INPUT -p tcp -s 192.168.20.0/24 --dport 1515 -j ACCEPT
+iptables -A INPUT -p tcp -s 192.168.20.0/24 --dport 55000 -j ACCEPT
+
+# ================================
+# Block DMZ from accessing Internal directly (No lateral movement)
+# ================================
+iptables -A FORWARD -s 192.168.10.0/24 -d 192.168.20.0/24 -j DROP
+
+# ================================
+# Log and drop everything else
+# ================================
+iptables -A INPUT -m limit --limit 5/min -j LOG --log-prefix "DMZ_DROP: "
+iptables -A INPUT -j DROP
+
+💾 Persist Firewall Rules
+apt install iptables-persistent -y
+netfilter-persistent save
+
+🔍 Verification
+iptables -L -n -v
+iptables -t nat -L
+
+🔒 NAT RULES (FOR A GATEWAY VM)
+
+If you are using a Linux gateway/firewall VM, here is the correct NAT configuration you can document in README.
+
+Assumptions
+
+Internet interface: eth0
+
+DMZ interface: eth1 → 192.168.10.0/24
+
+Internal interface: eth2 → 192.168.20.0/24
+
+✅ Enable IP Forwarding (MANDATORY)
+echo 1 > /proc/sys/net/ipv4/ip_forward
+
+
+Permanent:
+
+nano /etc/sysctl.conf
+net.ipv4.ip_forward=1
+
+✅ NAT (Masquerading) Rules
+iptables -t nat -A POSTROUTING -s 192.168.10.0/24 -o eth0 -j MASQUERADE
+iptables -t nat -A POSTROUTING -s 192.168.20.0/24 -o eth0 -j MASQUERADE
+
+
+📌 This allows DMZ and Internal to access the Internet.
+
+✅ (Optional) Port Forwarding to DMZ Web Server
+
+If you want Internet → DMZ Web App:
+
+iptables -t nat -A PREROUTING -i eth0 -p tcp --dport 80 \
+  -j DNAT --to-destination 192.168.10.10:80
+
+iptables -t nat -A PREROUTING -i eth0 -p tcp --dport 443 \
+  -j DNAT --to-destination 192.168.10.10:443
+
+🔐 Forwarding Rules (Security Required)
+iptables -A FORWARD -p tcp -d 192.168.10.10 --dport 80 -m conntrack --ctstate NEW,ESTABLISHED,RELATED -j ACCEPT
+iptables -A FORWARD -p tcp -d 192.168.10.10 --dport 443 -m conntrack --ctstate NEW,ESTABLISHED,RELATED -j ACCEPT
+iptables -A FORWARD -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT

@@ -1,0 +1,124 @@
+🔧 Wazuh Manager Configuration
+Step 1: Verify Wazuh Manager Service
+
+Ensure the Wazuh manager is installed and running:
+
+sudo systemctl status wazuh-manager
+
+
+If not running:
+
+sudo systemctl start wazuh-manager
+
+Step 2: Verify Manager Listening Ports
+
+The Wazuh manager must listen on required ports:
+
+sudo ss -lunpt | grep wazuh
+
+
+Required ports:
+
+1514/UDP – Agent data communication
+
+1515/TCP – Agent enrollment
+
+55000/TCP – Wazuh API (Dashboard)
+
+Step 3: Configure Firewall on Manager
+
+Allow agent communication:
+
+sudo iptables -A INPUT -p udp --dport 1514 -j ACCEPT
+sudo iptables -A INPUT -p tcp --dport 1515 -j ACCEPT
+sudo iptables -A INPUT -p tcp --dport 55000 -j ACCEPT
+
+Step 4: Verify Manager Configuration
+
+Manager configuration file location:
+
+/var/ossec/etc/ossec.conf
+
+
+Ensure default settings are present and no agent-specific IPs are hardcoded.
+
+🔧 Wazuh Agent Configuration (DMZ / Internal / Suricata Machines)
+Step 1: Edit Agent Configuration File
+
+On each agent machine, open:
+
+sudo nano /var/ossec/etc/ossec.conf
+
+Step 2: Configure Manager Connection
+
+Add or verify the <server> block:
+
+<server>
+  <address>WAZUH_MANAGER_IP</address>
+  <port>1514</port>
+  <protocol>udp</protocol>
+</server>
+
+
+🔹 Replace WAZUH_MANAGER_IP with the actual manager IP
+🔹 This configuration is done only on agents
+
+Step 3: Set Unique Agent Name
+
+Ensure each agent has a unique name:
+
+<agent_name>dmz-server</agent_name>
+
+
+Examples:
+
+dmz-server
+
+internal-server
+
+suricata-ids
+
+Step 4: Restart Wazuh Agent
+
+Apply changes:
+
+sudo systemctl restart wazuh-agent
+
+
+Verify:
+
+sudo systemctl status wazuh-agent
+
+Step 5: Register Agent with Manager
+
+On the Wazuh Manager:
+
+sudo /var/ossec/bin/manage_agents
+
+
+Add agent
+
+Extract agent key
+
+On the Agent machine:
+
+sudo /var/ossec/bin/manage_agents
+
+
+Import agent key
+
+Restart agent
+
+🔧 Integrating Suricata Logs with Wazuh Agent
+
+On the Suricata machine, add this to agent config:
+
+<localfile>
+  <log_format>json</log_format>
+  <location>/var/log/suricata/eve.json</location>
+</localfile>
+
+
+Restart agent:
+
+sudo systemctl restart wazuh-agent

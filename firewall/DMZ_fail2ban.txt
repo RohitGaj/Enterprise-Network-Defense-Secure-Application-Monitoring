@@ -1,0 +1,61 @@
+🔒 DMZ SERVER – Fail2Ban HARDENING
+🎯 Purpose
+
+Protect DMZ server from SSH brute-force attacks
+
+Automatically ban attacking IPs
+
+Works alongside iptables (defense-in-depth)
+
+✅ STEP 1: Install Fail2Ban (DMZ Server)
+sudo apt update
+sudo apt install fail2ban -y
+
+
+Verify:
+
+sudo systemctl status fail2ban
+
+✅ STEP 2: Create Local Jail Configuration
+
+⚠️ Never edit jail.conf directly.
+
+sudo nano /etc/fail2ban/jail.local
+
+✅ STEP 3: Add SSH Protection (Paste Everything Below)
+[DEFAULT]
+bantime  = 1h
+findtime = 10m
+maxretry = 5
+backend  = systemd
+usedns   = warn
+destemail = root@localhost
+sender = fail2ban@dmz-server
+action = iptables[name=SSH, port=ssh, protocol=tcp]
+
+[sshd]
+enabled = true
+port    = ssh
+logpath = %(sshd_log)s
+maxretry = 5
+
+✅ STEP 4: Restart Fail2Ban
+sudo systemctl restart fail2ban
+
+
+Verify:
+
+sudo fail2ban-client status
+
+
+Expected:
+
+Jail list: sshd
+
+✅ STEP 5: Verify SSH Jail Status
+sudo fail2ban-client status sshd
+
+
+You will see:
+
+Failed attempts

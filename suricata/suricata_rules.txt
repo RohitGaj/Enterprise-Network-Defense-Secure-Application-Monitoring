@@ -1,0 +1,7 @@
+For signature-based detection using Emerging Threats rules, the following steps were performed:
+sudo apt update
+sudo apt install suricata-update -y
+sudo suricata-update
+
+This downloads and updates the Emerging Threats Open rule set, which is installed at:
+/etc/suricata/rules/suricata.rules
