@@ -50,16 +50,19 @@ Only restricted and firewall-approved communication is allowed between zones.
 ## Screenshots & Evidence
 - Wazuh dashboard screenshots
 
-- <img width="1911" height="911" alt="Screenshot 2026-02-04 141654" src="https://github.com/user-attachments/assets/2f0d677f-7edb-422f-90b2-01c2aa78bb7a" />
+<img width="1911" height="911" alt="Screenshot 2026-02-04 141654" src="https://github.com/user-attachments/assets/2f0d677f-7edb-422f-90b2-01c2aa78bb7a" />
+
+<img width="922" height="206" alt="Screenshot 2026-02-04 143654" src="https://github.com/user-attachments/assets/eb26f201-65af-45e8-9079-dfffd4b113b8" />
+
+<img width="919" height="103" alt="Screenshot 2026-02-04 143631" src="https://github.com/user-attachments/assets/ea950bab-56b3-4a57-8f03-1c0cdd6b1656" />
 
 - Brute-force alerts
 - Nmap scan detection
 
-- <img width="1894" height="102" alt="Screenshot 2026-02-04 142815" src="https://github.com/user-attachments/assets/855e2293-3b43-4d91-bab3-cb1935da2c33" />
 
-- <img width="930" height="840" alt="Screenshot 2026-02-02 193837" src="https://github.com/user-attachments/assets/8fbcef8f-30b8-4af0-b84c-351bbbdeaaf1" />
+<img width="930" height="840" alt="Screenshot 2026-02-02 193837" src="https://github.com/user-attachments/assets/8fbcef8f-30b8-4af0-b84c-351bbbdeaaf1" />
 
-- <img width="928" height="855" alt="Screenshot 2026-02-04 143729" src="https://github.com/user-attachments/assets/866bee06-5252-4796-a8de-b46b54a12146" />
+<img width="928" height="855" alt="Screenshot 2026-02-04 143729" src="https://github.com/user-attachments/assets/866bee06-5252-4796-a8de-b46b54a12146" />
 
 
 
