@@ -1,2 +1,28 @@
 # Enterprise-Network-Defense-Secure-Application-Monitoring
-This project implements an enterprise network defense using NDC principles with a DMZ-based web application, internal secure storage, Suricata IDS for attack detection, and Wazuh SIEM for centralized monitoring and alerting of network and application attacks.
+
+# Enterprise Network Defense using NDC, IDS & SIEM
+
+This project demonstrates an enterprise-style network defense architecture using
+DMZ segmentation, Suricata IDS, and Wazuh SIEM. It detects network attacks,
+OWASP Top 10 web attacks, and DoS/DDoS activity using signature-based detection
+and centralized monitoring.
+
+## Architecture
+- DMZ-based web application
+- Internal encrypted data storage
+- Suricata for intrusion detection
+- Wazuh for SIEM monitoring
+
+## Key Features
+- Network segmentation (DMZ & Internal)
+- Signature-based attack detection
+- OWASP Top 10 monitoring
+- Centralized alerts and logs
+- Encryption at rest and in transit
+
+## Tools Used
+- Suricata
+- Wazuh
+- iptables / UFW
+- Apache / Flask
+- Kali Linux
